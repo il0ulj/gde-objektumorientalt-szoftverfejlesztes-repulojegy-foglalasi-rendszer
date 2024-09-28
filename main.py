@@ -5,7 +5,7 @@ from models.nemzetkoziJarat import NemzetkoziJarat
 from services.foglalas import FoglalasKezelo
 
 def rendszer_inditas():
-    legitarsasag = LegiTarsasag("PetAir")
+    legitarsasag = LegiTarsasag("PetAir légitársaság")
     jarat1 = BelfoldiJarat("BJ11", "Budapest, Budapest Liszt Ferenc nemzetközi repülőtér", 15000)
     jarat2 = NemzetkoziJarat("NJ11", "London, Lutoni repülőtér", 50000)
     jarat3 = NemzetkoziJarat("NJ12", "New York, John Fitzgerald Kennedy nemzetközi repülőtér", 80000)
@@ -31,14 +31,14 @@ def felhasznaloi_interfesz():
     legitarsasag, foglalas_kezelo = rendszer_inditas()
 
     while True:
-        print("\n--- Repülőjegy Foglalási Rendszer ---")
+        print("\n--- Repülőjegy Foglalási Rendszer ---\n")
         print("1. Járatok listázása")
         print("2. Jegy foglalása")
         print("3. Foglalás lemondása")
         print("4. Foglalások listázása")
         print("5. Kilépés")
 
-        valasztas = input("Válassz egy opciót: ")
+        valasztas = input("\nVálassz egy opciót: ")
 
         if valasztas == '1':
             legitarsasag.listaz_jaratok()
