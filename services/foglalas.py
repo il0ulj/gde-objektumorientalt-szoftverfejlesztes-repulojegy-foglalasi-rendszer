@@ -1,35 +1,30 @@
-class JegyFoglalas:
-    def __init__(self, jarat, utas_nev):
-        self.jarat = jarat
-        self.utas_nev = utas_nev
-
-    def __str__(self):
-        return f"Foglalás: {self.utas_nev}, {self.jarat.get_celallomas()}, {self.jarat.get_jegyar()} HUF"
-
+# services/foglalas.py
 class FoglalasKezelo:
     def __init__(self):
         self.foglalasok = []
 
     def foglal(self, jarat, utas_nev):
-        foglalas = JegyFoglalas(jarat, utas_nev)
-        self.foglalasok.append(foglalas)
-        print(f"Sikeres foglalás: {utas_nev} részére a(z) {jarat.get_celallomas()} járatra. Ár: {jarat.get_jegyar()} HUF")
-        return jarat.get_jegyar()
+        self.foglalasok.append({"utas_nev": utas_nev, "jarat": jarat})
+
+        print(f"Sikeres foglalás: {utas_nev} részére, a(z) {jarat.get_jaratszam()} járatszámú járatra, "
+              f"aminek a célállomása a(z) {jarat.get_celallomas()}. "
+              f"A jegy ára: {jarat.get_jegyar()} HUF")
 
     def lemond(self, utas_nev):
-        for foglalas in self.foglalasok:
-            if foglalas.utas_nev == utas_nev:
-                self.foglalasok.remove(foglalas)
-                print(f"{utas_nev} foglalása törölve.")
-                return True
-        print(f"Foglalás nem található: {utas_nev}")
-        return False
+        foglalas = next((f for f in self.foglalasok if f["utas_nev"] == utas_nev), None)
+        if foglalas:
+            self.foglalasok.remove(foglalas)
+            print(f"Sikeres lemondás: {utas_nev} foglalása törölve.")
+        else:
+            print(f"Nincs foglalás {utas_nev} névvel.")
 
     def listaz_foglalasok(self):
         if not self.foglalasok:
-            print("Nincs aktív foglalás.")
+            print("Nincsenek foglalások.")
         else:
-            print("\nAktív foglalások:")
             for foglalas in self.foglalasok:
-                print(foglalas)
+                jarat = foglalas["jarat"]
+                utas_nev = foglalas["utas_nev"]
+                print(f"Utas: {utas_nev}, Járat: {jarat.get_jaratszam()}, Célállomás: {jarat.get_celallomas()}, "
+                      f"Jegyár: {jarat.get_jegyar()} HUF")
 
